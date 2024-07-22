@@ -1,19 +1,17 @@
-void main() {
-  String str = 'bsabddbsaaaasas';
-  charCount(str);
+void main(){
+  String str = "sjadjsdjwbaabdbabdwbbwdd";
 }
-
-void charCount(String str) {
-  Map<String, int> count = {};
-  for (int i = 0; i < str.length; i++) {
+void charCount(String str){
+  Map<String, int> charCount = {};
+  for(int i = 0;i<str.length;i++){
     String char = str[i];
-    if (count.containsKey(char)) {
-      count[char] = count[char]! + 1;
-    } else {
-      count[char] = 1;
+    if(charCount.containsKey(char)){
+      charCount[char] = charCount[char]!+1;
+    }else{
+      charCount[char] = i;
     }
   }
-count.forEach((char,count){
-  print('$char:$count');
-});
+  charCount.forEach((char, count){
+    print('$char:$count');
+  });
 }
