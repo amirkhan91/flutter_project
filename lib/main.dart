@@ -5,6 +5,7 @@ import 'package:test_proj/api_config/api_config.dart';
 import 'package:test_proj/login_bloc/auth_repository.dart';
 import 'package:test_proj/login_bloc/login_page.dart';
 import 'package:test_proj/login_page_bloc/login_ui_bloc.dart';
+import 'package:test_proj/multiple_api_call/multi_res_page.dart';
 import 'package:test_proj/phone_bloc/phone_bloc.dart';
 import 'package:test_proj/phone_bloc/phone_details.dart';
 import 'package:test_proj/router/go_router.dart';
@@ -30,41 +31,42 @@ class MyApp extends StatelessWidget {
     ],
   );
   // This widget is the root of your application.
-  // @override
-  // Widget build(BuildContext context) {
-  //   return MaterialApp(
-  //       debugShowCheckedModeBanner: false,
-  //       title: 'Flutter Demo',
-  //       theme: ThemeData(
-  //         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-  //         useMaterial3: true,
-  //       ),
-  //       home: LoginUiBloc()
-  //       // RepositoryProvider(
-  //       //   create: (context) => AuthRepository(),
-  //       //   child: const LoginPage(),
-  //       // )
-
-  //       // BlocProvider(
-  //       //   create: (context) => PhoneBloc(ApiCongig()),
-  //       //   child: const PhoneDetailPage(),
-  //       // )
-  //       // const MyHomePage(title: 'Flutter Demo Home Page'),
-  //       );
-  // }
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      routerDelegate: _router.routerDelegate,
-      routeInformationParser: _router.routeInformationParser,
-    );
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: MultiResponsePage()
+        // LoginUiBloc()
+        // RepositoryProvider(
+        //   create: (context) => AuthRepository(),
+        //   child: const LoginPage(),
+        // )
+
+        // BlocProvider(
+        //   create: (context) => PhoneBloc(ApiCongig()),
+        //   child: const PhoneDetailPage(),
+        // )
+        // const MyHomePage(title: 'Flutter Demo Home Page'),
+        );
   }
+  // @override
+  // Widget build(BuildContext context) {
+  //   return MaterialApp.router(
+  //     debugShowCheckedModeBanner: false,
+  //     title: 'Flutter Demo',
+  //     theme: ThemeData(
+  //       colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+  //       useMaterial3: true,
+  //     ),
+  //     routerDelegate: _router.routerDelegate,
+  //     routeInformationParser: _router.routeInformationParser,
+  //   );
+  // }
 }
 
 class MyHomePage extends StatefulWidget {
