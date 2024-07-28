@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:test_proj/api_config/api_config.dart';
+import 'package:test_proj/demo_intr/design.dart';
 import 'package:test_proj/login_bloc/auth_repository.dart';
 import 'package:test_proj/login_bloc/login_page.dart';
 import 'package:test_proj/login_page_bloc/login_ui_bloc.dart';
@@ -9,6 +10,7 @@ import 'package:test_proj/multiple_api_call/multi_res_page.dart';
 import 'package:test_proj/phone_bloc/phone_bloc.dart';
 import 'package:test_proj/phone_bloc/phone_details.dart';
 import 'package:test_proj/router/go_router.dart';
+import 'package:test_proj/unit_test/employee_fetch_data.dart';
 
 import 'login_page_bloc/login_bloc_page.dart';
 
@@ -40,7 +42,9 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: MultiResponsePage()
+        home:const EmployeeData()
+        //  DesignPage()
+        // MultiResponsePage()
         // LoginUiBloc()
         // RepositoryProvider(
         //   create: (context) => AuthRepository(),

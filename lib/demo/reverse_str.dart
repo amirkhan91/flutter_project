@@ -1,17 +1,14 @@
 void main(){
-  String str = "sjadjsdjwbaabdbabdwbbwdd";
+  List<int> list = [1,2,3,2,2,1,1,2,3,3,3,2,2,3,4];
+  List<int> un = removeDP(list);
+  print(un);
 }
-void charCount(String str){
-  Map<String, int> charCount = {};
-  for(int i = 0;i<str.length;i++){
-    String char = str[i];
-    if(charCount.containsKey(char)){
-      charCount[char] = charCount[char]!+1;
-    }else{
-      charCount[char] = i;
+List<int> removeDP(List<int> input){
+  List<int> unique = [];
+  for(int number in input){
+    if(!unique.contains(number)){
+      unique.add(number);
     }
   }
-  charCount.forEach((char, count){
-    print('$char:$count');
-  });
-}
+  return unique;
+} 
