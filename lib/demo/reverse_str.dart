@@ -1,14 +1,15 @@
+// Var arry - [1, 2,3,7,9]
+// Out put - [9,7,3,2,1]
 void main(){
-  List<int> list = [1,2,3,2,2,1,1,2,3,3,3,2,2,3,4];
-  List<int> un = removeDP(list);
-  print(un);
+  List<int> arry = [1, 2,3,7,9];
+  List<int> arra1 = revInt(arry);
+  print(arra1);
+
 }
-List<int> removeDP(List<int> input){
-  List<int> unique = [];
-  for(int number in input){
-    if(!unique.contains(number)){
-      unique.add(number);
-    }
+List<int> revInt(List<int> input){
+  List<int> array1= [];
+  for(int i = input.length-1;i>=0;i--){
+    array1 += input[i] as List<int>;
   }
-  return unique;
-} 
+  return array1;
+}
