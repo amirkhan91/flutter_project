@@ -46,7 +46,7 @@ class _ContactListPageState extends State<ContactListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Contact List'),
+        title: Text('Contact List Data'),
       ),
       body: Column(
         children: [
