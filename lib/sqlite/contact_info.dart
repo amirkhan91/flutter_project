@@ -1,5 +1,6 @@
-import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_sqlcipher/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class Contact {
   final int? id;
@@ -25,19 +26,38 @@ class DatabaseHelper {
 
   static Database? _database;
 
+  // Secure storage instance for storing and retrieving the database password
+  static const FlutterSecureStorage _secureStorage = FlutterSecureStorage();
+  static const String _dbPasswordKey = 'db_password';
+
   Future<Database> get database async {
     if (_database != null) return _database!;
     _database = await _initDatabase();
     return _database!;
   }
 
+  Future<String> _getPassword() async {
+    // Retrieve the password from secure storage or generate a new one
+    String? password = await _secureStorage.read(key: _dbPasswordKey);
+
+    if (password == null) {
+      password = 'your_secure_password';  // Replace this with  generated password
+      await _secureStorage.write(key: _dbPasswordKey, value: password);
+    }
+    return password;
+  }
+
   Future<Database> _initDatabase() async {
-    String path = join(await getDatabasesPath(), 'contacts.db');
+    String path = join(await getDatabasesPath(), 'contacts_secure.db');
+    String password = await _getPassword();
+
+    // Open the encrypted database
     return await openDatabase(
       path,
+      password: password,  // Use the secure password
       version: 1,
-      onCreate: (db, version) {
-        return db.execute(
+      onCreate: (db, version) async {
+        await db.execute(
           "CREATE TABLE contacts(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, phone TEXT)",
         );
       },
@@ -68,8 +88,9 @@ class DatabaseHelper {
     await db.delete('contacts', where: 'id = ?', whereArgs: [id]);
   }
 
-  Future<void> updateContact(Contact contact) async{
+  Future<void> updateContact(Contact contact) async {
     final db = await database;
-       await db.update('contacts',contact.toMap() ,where: 'id = ?', whereArgs: [contact.id]);
+    await db.update('contacts', contact.toMap(),
+        where: 'id = ?', whereArgs: [contact.id]);
   }
 }
