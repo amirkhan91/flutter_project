@@ -46,7 +46,7 @@ dependencies:
   drift: ^2.19.1+1
   
   flutter_secure_storage: ^9.2.2
-  sqflite_sqlcipher: ^2.0.0
+  sqflite_sqlcipher: ^2.2.1
 
 dev_dependencies:
   flutter_test:
