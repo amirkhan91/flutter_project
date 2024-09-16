@@ -5,7 +5,6 @@ import 'package:test_proj/video_capture_data/video_player_scree.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'video_capture_screen.dart';
 
-
 class VideoListScreen extends StatefulWidget {
   @override
   _VideoListScreenState createState() => _VideoListScreenState();

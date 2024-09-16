@@ -135,15 +135,15 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen> {
                     ),
                     IconButton(
                       icon: Icon(Icons.zoom_out),
-                      onPressed: () => _setZoomLevel(0.5),
+                      onPressed: () => _setZoomLevel(0.5), // Wide Angle
                     ),
                     IconButton(
                       icon: Icon(Icons.zoom_in),
-                      onPressed: () => _setZoomLevel(1.0),
+                      onPressed: () => _setZoomLevel(1.0), // Normal
                     ),
                     IconButton(
                       icon: Icon(Icons.zoom_out_map),
-                      onPressed: () => _setZoomLevel(2.0),
+                      onPressed: () => _setZoomLevel(2.0), // Zoom
                     ),
                     FloatingActionButton(
                       onPressed: _isRecording ? _stopVideoRecording : _startVideoRecording,
