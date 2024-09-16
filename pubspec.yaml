@@ -46,10 +46,10 @@ dependencies:
   drift: ^2.19.1+1
   
   flutter_secure_storage: ^9.2.2
-  camera: ^0.11.0+2
-  path_provider: ^2.1.4
-  video_player: ^2.9.1
-  permission_handler: ^11.3.1
+  camera: ^0.10.5+9
+  path_provider: ^2.1.0
+  video_player: ^2.8.6
+  permission_handler: ^11.0.0
   
 
 dev_dependencies:
