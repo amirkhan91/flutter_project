@@ -2,8 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:test_proj/video_capture_data/video_player_scree.dart';
-
+import 'package:video_thumbnail/video_thumbnail.dart';
 import 'video_capture_screen.dart';
+
 
 class VideoListScreen extends StatefulWidget {
   @override
@@ -28,6 +29,15 @@ class _VideoListScreenState extends State<VideoListScreen> {
     });
   }
 
+  Future<String?> _getThumbnail(String videoPath) async {
+    return await VideoThumbnail.thumbnailFile(
+      video: videoPath,
+      imageFormat: ImageFormat.JPEG,
+      maxHeight: 64, // Thumbnail height
+      quality: 75,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,15 +48,22 @@ class _VideoListScreenState extends State<VideoListScreen> {
               itemCount: _videos.length,
               itemBuilder: (context, index) {
                 String videoName = _videos[index].path.split('/').last;
-                return ListTile(
-                  leading: Icon(Icons.videocam),
-                  title: Text(videoName),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => VideoPlayerScreen(videoPath: _videos[index].path),
-                      ),
+                return FutureBuilder<String?>(
+                  future: _getThumbnail(_videos[index].path),
+                  builder: (context, snapshot) {
+                    return ListTile(
+                      leading: snapshot.hasData
+                          ? Image.file(File(snapshot.data!))
+                          : Icon(Icons.videocam),
+                      title: Text(videoName),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => VideoPlayerScreen(videoPath: _videos[index].path),
+                          ),
+                        );
+                      },
                     );
                   },
                 );

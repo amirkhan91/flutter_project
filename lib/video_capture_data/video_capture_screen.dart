@@ -14,6 +14,8 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen> {
   List<CameraDescription>? _cameras;
   bool _isRecording = false;
   double _zoomLevel = 1.0;
+  Timer? _timer;
+  int _recordTime = 0;
 
   @override
   void initState() {
@@ -31,6 +33,7 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen> {
   @override
   void dispose() {
     _controller?.dispose();
+    _timer?.cancel();
     super.dispose();
   }
 
@@ -47,6 +50,7 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen> {
       await _controller?.startVideoRecording();
       setState(() {
         _isRecording = true;
+        _startTimer();
       });
     }
   }
@@ -58,6 +62,7 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen> {
       await videoFile.saveTo(filePath); // Save video to the specified file path
       setState(() {
         _isRecording = false;
+        _stopTimer();
       });
     }
   }
@@ -78,13 +83,28 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen> {
     }
   }
 
-  void _setZoom(double zoom) {
+  void _setZoomLevel(double zoom) {
     if (_controller != null) {
       _controller!.setZoomLevel(zoom);
       setState(() {
         _zoomLevel = zoom;
       });
     }
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+      setState(() {
+        _recordTime++;
+      });
+    });
+  }
+
+  void _stopTimer() {
+    _timer?.cancel();
+    setState(() {
+      _recordTime = 0;
+    });
   }
 
   @override
@@ -98,6 +118,10 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen> {
                 Expanded(
                   child: CameraPreview(_controller!),
                 ),
+                Text(
+                  _isRecording ? 'Recording: ${_recordTime}s' : '',
+                  style: TextStyle(fontSize: 18, color: Colors.red),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -110,12 +134,16 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen> {
                       onPressed: _switchCamera,
                     ),
                     IconButton(
-                      icon: Icon(Icons.zoom_in),
-                      onPressed: () => _setZoom(2.0),
+                      icon: Icon(Icons.zoom_out),
+                      onPressed: () => _setZoomLevel(0.5),
                     ),
                     IconButton(
-icon: Icon(Icons.zoom_out),
-                      onPressed: () => _setZoom(1.0),
+                      icon: Icon(Icons.zoom_in),
+                      onPressed: () => _setZoomLevel(1.0),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.zoom_out_map),
+                      onPressed: () => _setZoomLevel(2.0),
                     ),
                     FloatingActionButton(
                       onPressed: _isRecording ? _stopVideoRecording : _startVideoRecording,
