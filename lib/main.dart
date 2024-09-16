@@ -285,45 +285,45 @@ class MyApp extends StatelessWidget {
   //           ));
   // }
   Widget build(BuildContext context) {
-    // return MultiBlocProvider(
-    //   providers: 
-    //   [
-    //      BlocProvider(create: (context) => FirstBloc()),
-    //     BlocProvider(create: (context) => SecondBloc()),
-    //   ], child: const MaterialApp(
-    //     home: MergeBlocData(),
-    //   ));
-     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          brightness: Brightness.light,
-          // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home:
-        //  VideoListScreen(),
-        // routes: {
-        //   '/capture': (context) => VideoCaptureScreen(),
-        // },
-         MergeBlocDataq()
-        // HomePageSHPR()
-        // MyWidgetPage()
-        // QuizPage()
-        // StreamPage()
-        // ListWidgetType()
-        //  NotifierPage()
-        // SigeltonHomePage()
-        // CompoundInterestCalculator()
-        // ThemePage()
-        // NotificationPage()
-        // NewSc1()
-        //     BlocProvider(
-        //   create: (context) => BlocEventState(ApiConf()),
-        //   child: const BlocUIScreen(),
-        // )
-        );
+    return MultiBlocProvider(
+      providers: 
+      [
+         BlocProvider(create: (context) => FirstBloc()),
+        BlocProvider(create: (context) => SecondBloc()),
+      ], child: const MaterialApp(
+        home: MergeBlocData(),
+      ));
+    //  return MaterialApp(
+    //     debugShowCheckedModeBanner: false,
+    //     title: 'Flutter Demo',
+    //     theme: ThemeData(
+    //       primarySwatch: Colors.blue,
+    //       brightness: Brightness.light,
+    //       // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+    //       useMaterial3: true,
+    //     ),
+    //     home:
+    //     //  VideoListScreen(),
+    //     // routes: {
+    //     //   '/capture': (context) => VideoCaptureScreen(),
+    //     // },
+    //     //  MergeBlocDataq()
+    //     // HomePageSHPR()
+    //     // MyWidgetPage()
+    //     // QuizPage()
+    //     // StreamPage()
+    //     // ListWidgetType()
+    //     //  NotifierPage()
+    //     // SigeltonHomePage()
+    //     // CompoundInterestCalculator()
+    //     // ThemePage()
+    //     // NotificationPage()
+    //     // NewSc1()
+    //     //     BlocProvider(
+    //     //   create: (context) => BlocEventState(ApiConf()),
+    //     //   child: const BlocUIScreen(),
+    //     // )
+    //     );
   }
 }
 
