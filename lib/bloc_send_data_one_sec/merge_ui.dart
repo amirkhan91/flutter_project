@@ -71,3 +71,4 @@ class MergeBlocData extends StatelessWidget {
     );
   }
 }
+// git remote add origin https://github.com/amirkhan91/flutter_project.git
