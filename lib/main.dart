@@ -247,8 +247,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test_proj/bloc_send_data_one_sec/first_bloc/first_event.dart';
+import 'package:test_proj/bloc_send_data_one_sec/merge_ui.dart';
+import 'package:test_proj/bloc_send_data_one_sec/second_bloc/second_event.dart';
 import 'package:test_proj/demo_intr/demo.dart';
+import 'package:test_proj/demo_screen.dart/demo_screen_page.dart';
 import 'package:test_proj/sqlite/contact_ui.dart';
+import 'package:test_proj/video_capture_data/video_capture_screen.dart';
+import 'package:test_proj/video_capture_data/video_list.dart';
 
 
 void main() {
@@ -279,7 +285,15 @@ class MyApp extends StatelessWidget {
   //           ));
   // }
   Widget build(BuildContext context) {
-    return MaterialApp(
+    // return MultiBlocProvider(
+    //   providers: 
+    //   [
+    //      BlocProvider(create: (context) => FirstBloc()),
+    //     BlocProvider(create: (context) => SecondBloc()),
+    //   ], child: const MaterialApp(
+    //     home: MergeBlocData(),
+    //   ));
+     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
@@ -288,7 +302,11 @@ class MyApp extends StatelessWidget {
           // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home:  ContactListPage()
+        home: VideoListScreen(),
+        routes: {
+          '/capture': (context) => VideoCaptureScreen(),
+        },
+        //  MergeBlocDataq()
         // HomePageSHPR()
         // MyWidgetPage()
         // QuizPage()
