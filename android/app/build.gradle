@@ -62,8 +62,7 @@
 plugins {
     id "com.android.application"
     id "kotlin-android"
-    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
-    id "dev.flutter.flutter-gradle-plugin"
+    id "dev.flutter.flutter-gradle-plugin" // Flutter plugin
 }
 
 def localProperties = new Properties()
@@ -74,31 +73,19 @@ if (localPropertiesFile.exists()) {
     }
 }
 
-def flutterVersionCode = localProperties.getProperty("flutter.versionCode")
-if (flutterVersionCode == null) {
-    flutterVersionCode = "1"
-}
-
-def flutterVersionName = localProperties.getProperty("flutter.versionName")
-if (flutterVersionName == null) {
-    flutterVersionName = "1.0"
-}
+def flutterVersionCode = localProperties.getProperty("flutter.versionCode", "1")
+def flutterVersionName = localProperties.getProperty("flutter.versionName", "1.0")
 
 android {
     namespace = "com.example.test_proj"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
-    // Set Java compatibility to 1.8
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
-        javaToolchain {
-            languageVersion = JavaLanguageVersion.of(8)  // Set Java version explicitly to 8
-        }
     }
 
-    // Set Kotlin JVM target
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -125,8 +112,7 @@ flutter {
     source = "../.."
 }
 
-// Dependencies section
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    // Other dependencies can be added here as needed
+    // Add other necessary dependencies here
 }
