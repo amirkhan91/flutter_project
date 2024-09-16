@@ -1,4 +1,34 @@
 
+// buildscript {
+//     ext.kotlin_version = '1.9.10' // Define the Kotlin version here
+//     repositories {
+//         google()
+//         mavenCentral()
+//     }
+//     dependencies {
+//         classpath "com.android.tools.build:gradle:8.1.1" // Android Gradle plugin version
+//         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version" // Use the Kotlin version here
+//         // NOTE: Do not place your application dependencies here; they belong in the individual module build.gradle files
+//     }
+// }
+// allprojects {
+//     repositories {
+//         google()
+//         mavenCentral()
+//     }
+// }
+
+// rootProject.buildDir = "../build"
+// subprojects {
+//     project.buildDir = "${rootProject.buildDir}/${project.name}"
+// }
+// subprojects {
+//     project.evaluationDependsOn(":app")
+// }
+
+// tasks.register("clean", Delete) {
+//     delete rootProject.buildDir
+// }
 buildscript {
     ext.kotlin_version = '1.9.10' // Define the Kotlin version here
     repositories {
@@ -7,10 +37,11 @@ buildscript {
     }
     dependencies {
         classpath "com.android.tools.build:gradle:8.1.1" // Android Gradle plugin version
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version" // Use the Kotlin version here
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version" // Kotlin plugin
         // NOTE: Do not place your application dependencies here; they belong in the individual module build.gradle files
     }
 }
+
 allprojects {
     repositories {
         google()
