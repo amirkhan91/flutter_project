@@ -67,19 +67,36 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen> {
     }
   }
 
-  void _switchCamera() {
-    setState(() {
+  void _switchCamera() async {
+    if (_controller != null) {
+      setState(() {
+        _controller = null; // Set controller to null to show loader
+      });
+
       final CameraDescription selectedCamera = _cameras!.firstWhere(
         (camera) => camera != _controller?.description,
       );
+
+      // Reinitialize the camera controller with the new camera
       _controller = CameraController(selectedCamera, ResolutionPreset.high);
-      _controller?.initialize();
-    });
+
+      try {
+        await _controller?.initialize();
+      } catch (e) {
+        print('Error initializing camera: $e');
+      }
+
+      // Update the UI when camera is initialized
+      if (mounted) {
+        setState(() {});
+      }
+    }
   }
 
   void _toggleFlash() {
     if (_controller != null) {
-      _controller!.setFlashMode(_controller!.value.flashMode == FlashMode.off ? FlashMode.torch : FlashMode.off);
+      _controller!.setFlashMode(
+          _controller!.value.flashMode == FlashMode.off ? FlashMode.torch : FlashMode.off);
     }
   }
 
@@ -93,7 +110,7 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen> {
   }
 
   void _startTimer() {
-    _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       setState(() {
         _recordTime++;
       });
@@ -110,9 +127,9 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Capture Video')),
+      appBar: AppBar(title: const Text('Capture Video')),
       body: _controller == null || !_controller!.value.isInitialized
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : Column(
               children: [
                 Expanded(
@@ -120,29 +137,31 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen> {
                 ),
                 Text(
                   _isRecording ? 'Recording: ${_recordTime}s' : '',
-                  style: TextStyle(fontSize: 18, color: Colors.red),
+                  style: const TextStyle(fontSize: 18, color: Colors.red),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     IconButton(
-                      icon: Icon(_controller!.value.flashMode == FlashMode.off ? Icons.flash_off : Icons.flash_on),
+                      icon: Icon(_controller!.value.flashMode == FlashMode.off
+                          ? Icons.flash_off
+                          : Icons.flash_on),
                       onPressed: _toggleFlash,
                     ),
                     IconButton(
-                      icon: Icon(Icons.camera_front),
+                      icon: const Icon(Icons.camera_front),
                       onPressed: _switchCamera,
                     ),
                     IconButton(
-                      icon: Icon(Icons.zoom_out),
+                      icon: const Icon(Icons.zoom_out),
                       onPressed: () => _setZoomLevel(0.5), // Wide Angle
                     ),
                     IconButton(
-                      icon: Icon(Icons.zoom_in),
+                      icon: const Icon(Icons.zoom_in),
                       onPressed: () => _setZoomLevel(1.0), // Normal
                     ),
                     IconButton(
-                      icon: Icon(Icons.zoom_out_map),
+                      icon: const Icon(Icons.zoom_out_map),
                       onPressed: () => _setZoomLevel(2.0), // Zoom
                     ),
                     FloatingActionButton(
