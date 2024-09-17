@@ -1,3 +1,0 @@
-class MyAssets{
-  MyAssets._();
-}

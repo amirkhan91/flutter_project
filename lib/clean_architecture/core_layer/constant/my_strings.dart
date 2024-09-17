@@ -1,3 +1,0 @@
-class MyStrings{
-  MyStrings._();
-}
