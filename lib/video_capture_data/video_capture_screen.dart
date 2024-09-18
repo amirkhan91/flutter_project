@@ -67,15 +67,35 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen> {
     }
   }
 
-  void _switchCamera() {
-    setState(() {
-      final CameraDescription selectedCamera = _cameras!.firstWhere(
-        (camera) => camera != _controller?.description,
+ void _switchCamera() {
+  if (_cameras != null && _cameras!.isNotEmpty) {
+    CameraDescription newCamera;
+    
+    // Check if the current camera is the back camera, then switch to the front camera, and vice versa.
+    if (_controller?.description.lensDirection == CameraLensDirection.back) {
+      newCamera = _cameras!.firstWhere(
+        (camera) => camera.lensDirection == CameraLensDirection.front,
+        orElse: () => _cameras!.first, // Fallback to any available camera if no front camera
       );
-      _controller = CameraController(selectedCamera, ResolutionPreset.high);
-      _controller?.initialize();
+    } else {
+      newCamera = _cameras!.firstWhere(
+        (camera) => camera.lensDirection == CameraLensDirection.back,
+        orElse: () => _cameras!.first, // Fallback to any available camera if no back camera
+      );
+    }
+
+    if (_controller != null) {
+      _controller!.dispose();
+    }
+    
+    // Re-initialize the controller with the selected camera
+    _controller = CameraController(newCamera, ResolutionPreset.high);
+    _controller?.initialize().then((_) {
+      setState(() {});
     });
   }
+}
+
 
   void _toggleFlash() {
     if (_controller != null) {
