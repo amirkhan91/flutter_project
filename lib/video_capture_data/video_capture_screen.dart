@@ -39,8 +39,8 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen> {
 
   Future<String> _getVideoFilePath() async {
     final Directory? externalDir = await getExternalStorageDirectory();
-    final String dirPath = '${externalDir!.path}/Download'; // Save to Downloads folder
-    await Directory(dirPath).create(recursive: true); // Ensure the directory exists
+    final String dirPath = '${externalDir!.path}/Download'; 
+    await Directory(dirPath).create(recursive: true); 
     return '$dirPath/${DateTime.now().millisecondsSinceEpoch}.mp4';
   }
 
@@ -56,31 +56,48 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen> {
   }
 
   Future<void> _stopVideoRecording() async {
-    if (_controller != null && _isRecording) {
-      final XFile videoFile = await _controller!.stopVideoRecording();
-      final String filePath = await _getVideoFilePath();
-      await videoFile.saveTo(filePath); // Save video to the specified file path
-      setState(() {
-        _isRecording = false;
-        _stopTimer();
-      });
-    }
+  if (_controller != null && _isRecording) {
+    final XFile videoFile = await _controller!.stopVideoRecording();
+    
+    // Get the file path in the Downloads folder
+    final Directory? downloadsDir = await getExternalStorageDirectory();
+    final String downloadsPath = '${downloadsDir!.path}/Download'; // Public Downloads folder path
+    final String newFilePath = '$downloadsPath/${DateTime.now().millisecondsSinceEpoch}.mp4';
+    
+    // Create the Downloads folder if it doesn't exist
+    await Directory(downloadsPath).create(recursive: true);
+
+    // Move the captured video file to the Downloads folder
+    final File savedVideo = File(videoFile.path);
+    await savedVideo.copy(newFilePath);
+    
+    setState(() {
+      _isRecording = false;
+      _stopTimer();
+    });
+
+    // Notify the user that the video has been saved
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Video saved to Downloads folder')),
+    );
   }
+}
+
 
  void _switchCamera() {
   if (_cameras != null && _cameras!.isNotEmpty) {
     CameraDescription newCamera;
     
-    // Check if the current camera is the back camera, then switch to the front camera, and vice versa.
+    
     if (_controller?.description.lensDirection == CameraLensDirection.back) {
       newCamera = _cameras!.firstWhere(
         (camera) => camera.lensDirection == CameraLensDirection.front,
-        orElse: () => _cameras!.first, // Fallback to any available camera if no front camera
+        orElse: () => _cameras!.first, 
       );
     } else {
       newCamera = _cameras!.firstWhere(
         (camera) => camera.lensDirection == CameraLensDirection.back,
-        orElse: () => _cameras!.first, // Fallback to any available camera if no back camera
+        orElse: () => _cameras!.first, 
       );
     }
 
@@ -88,7 +105,7 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen> {
       _controller!.dispose();
     }
     
-    // Re-initialize the controller with the selected camera
+    
     _controller = CameraController(newCamera, ResolutionPreset.high);
     _controller?.initialize().then((_) {
       setState(() {});
@@ -155,15 +172,15 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen> {
                     ),
                     IconButton(
                       icon: const Icon(Icons.zoom_out),
-                      onPressed: () => _setZoomLevel(0.5), // Wide Angle
+                      onPressed: () => _setZoomLevel(0.5), 
                     ),
                     IconButton(
                       icon: const Icon(Icons.zoom_in),
-                      onPressed: () => _setZoomLevel(1.0), // Normal
+                      onPressed: () => _setZoomLevel(1.0), 
                     ),
                     IconButton(
                       icon: const Icon(Icons.zoom_out_map),
-                      onPressed: () => _setZoomLevel(2.0), // Zoom
+                      onPressed: () => _setZoomLevel(2.0), 
                     ),
                     FloatingActionButton(
                       onPressed: _isRecording ? _stopVideoRecording : _startVideoRecording,
